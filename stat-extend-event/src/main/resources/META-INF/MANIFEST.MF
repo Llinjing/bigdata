@@ -1,0 +1,1 @@
+Main-Class: com.inveno.news.stat.statUserCnt

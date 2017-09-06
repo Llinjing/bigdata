@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.inveno.bigdata</groupId>
+    <artifactId>nearline-feedback</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>nearline-common</module>
+        <module>nearline-feedback-overseas</module>
+        <module>nearline-feedback-native</module>
+        <module>nearline-feedback-source</module>
+        <!-- nearline-feedback-source -->
+        <module>ad-nearline-feedback</module>
+        <module>video-play-error</module>
+        <module>nearline-feedback-share</module>
+    </modules>
+
+    <properties>
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <scala.version>2.10.5</scala.version>
+        <scala.compat.version>2.10</scala.compat.version>
+    </properties>
+
+</project>
+
+

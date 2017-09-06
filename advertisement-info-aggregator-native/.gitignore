@@ -1,0 +1,6 @@
+/target/
+.cache-main
+.cache-tests
+/.idea/
+/.settings/
+advertisement-info-aggregator-native.iml

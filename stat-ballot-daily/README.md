@@ -1,0 +1,1 @@
+stat-ballot-daily

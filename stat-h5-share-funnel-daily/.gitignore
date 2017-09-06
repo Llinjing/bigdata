@@ -1,0 +1,6 @@
+/target/
+.cache-main
+.cache-tests
+/.idea/
+/.settings/
+stat-h5-share-funnel-daily.iml

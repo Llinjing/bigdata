@@ -1,0 +1,5 @@
+## add by huanghaifeng ##
+## article-throughput ##
+01,11,21,31,41,51 * * * * cd /data1/apps/article-throughput/bin && sh -x submit-task.sh 1>../log/submit-task.err 2>&1
+*/1 * * * * cd /data1/apps/article-throughput/bin && sh -x schedule-manager.sh 1>../log/schedule-manager.err 2>&1
+*/10 * * * * cd /data1/apps/article-throughput/bin && sh -x monitor.sh 1>../log/monitor.err 2>&1

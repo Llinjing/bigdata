@@ -1,0 +1,2 @@
+USE dashboard;
+set names utf8;select 'all', 'all', sum(request), sum(impression) from t_daily_article_operate_20170314 where user_type='all' union all select app, 'all', sum(request), sum(impression) from t_daily_article_operate_20170314 where user_type='all' group by app union all select 'all', language, sum(request), sum(impression) from t_daily_article_operate_20170314 where user_type='all' group by language union all select app, language, sum(request), sum(impression) from t_daily_article_operate_20170314 where user_type='all' group by app, language;

@@ -1,0 +1,130 @@
+{
+    "type": "index_hadoop",
+    "spec": {
+        "dataSchema": {
+            "dataSource": "user_daily_201703101200",
+            "parser": {
+                "type": "hadoopyString",
+                "parseSpec": {
+                    "format": "tsv",
+                    "timestampSpec": {
+                        "column": "timestamp",
+                        "format": "yyyyMMddHHmm"
+                    },
+                    "dimensionsSpec": {
+                        "dimensions": [],
+                        "dimensionExclusions": [],
+                        "spatialDimensions": []
+                    },
+                    "delimiter" : "\t",
+                    "columns" : [
+                        "timestamp",
+                        "product_id",
+                        "app_ver",
+                        "language",
+                        "promotion",
+                        "config_id",
+                        "protocol",
+                        "content_type",
+                        "strategy",
+                        "scenario_channel",
+                        "scenario",
+                        "ad_configid",
+                        "biz_configid",
+                        "total_request",
+                        "total_request_user",
+                        "total_impression",
+                        "total_impression_user",
+                        "total_click",
+                        "total_click_user",
+                        "total_detail_dwell_time",
+                        "total_detail_dwell_user",
+                        "total_listpage_dwelltime",
+                        "total_listpage_dwelltime_user",
+                        "platform",
+                        "user_type"]
+                }
+            },
+            "metricsSpec": [
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_request",
+                    "fieldName" : "total_request"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_request_user",
+                    "fieldName" : "total_request_user"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_impression",
+                    "fieldName" : "total_impression"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_impression_user",
+                    "fieldName" : "total_impression_user"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_click",
+                    "fieldName" : "total_click"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_click_user",
+                    "fieldName" : "total_click_user"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_detail_dwell_time",
+                    "fieldName" : "total_detail_dwell_time"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_detail_dwell_user",
+                    "fieldName" : "total_detail_dwell_user"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_listpage_dwelltime",
+                    "fieldName" : "total_listpage_dwelltime"
+                },
+                {
+                    "type" : "doubleSum",
+                    "name" : "total_listpage_dwelltime_user",
+                    "fieldName" : "total_listpage_dwelltime_user"
+                }
+            ],
+            "granularitySpec": {
+                "segmentGranularity": "DAY",
+                "queryGranularity": "NONE",
+                "intervals":["2017-05-27/2017-05-28"]
+            }
+        },
+        "ioConfig": {
+            "type": "hadoop",
+            "inputSpec": {
+                "type": "static",
+                "paths": "s3://bigdata-east/inveno-projects/offline/history/daily-user/20170527/t-daily-user-*"
+            }
+        },
+        "tuningConfig" : {
+                "type" : "hadoop",
+                "partitionsSpec" : {
+                     "type" : "hashed",
+                     "targetPartitionSize" : 5000000
+                },
+                "jobProperties" : {
+                     "mapreduce.job.classloader" : "true",
+                     "mapreduce.job.classloader.system.classes" : "-javax.validation.,java.,javax.,org.apache.commons.logging.,org.apache.log4j.,org.apache.hadoop.",
+                     "mapreduce.map.java.opts" : "-Duser.timezone=Asia/Shanghai -Dfile.encoding=UTF-8",
+                     "mapreduce.reduce.java.opts" : "-Duser.timezone=Asia/Shanghai -Dfile.encoding=UTF-8",
+                     "mapreduce.job.queuename" : "offline"
+                 }
+        },
+        "hadoopDependencyCoordinates": ["org.apache.hadoop:hadoop-client:2.3.0"]
+    }
+}
+

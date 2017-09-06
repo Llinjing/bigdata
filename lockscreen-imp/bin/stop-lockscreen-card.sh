@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source ../conf/project.conf
+
+
+task_name=${TASK_NAME[$TASK_ID_LOCKSCREEN_CARD]}
+
+pid=`ps -ef | grep "LockScreenCardService" | grep "${task_name}" | grep -v "grep" | awk '{print $2}'`
+if [ -n "${pid}" ]
+then
+	kill -15 ${pid}
+        
+	curr_time=`date +%Y-%m-%d_%H:%M:%S`
+
+	while true	
+	do
+		event_time=`tail -10000 ${LOCAL_LOG_PATH}/${task_name}.log | grep -a "ShutdownHook is trigged" 2>/dev/null | 
+		tail -1 | awk '{
+			print $1"_"$2
+		}'`
+		if [ "${event_time}" == "${curr_time}" -o "${event_time}" \> "${curr_time}" ]
+		then
+			break
+ 		else
+			sleep 2
+		fi
+	done
+else
+	echo "No such JVM process" >&2
+fi

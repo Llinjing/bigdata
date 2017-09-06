@@ -1,0 +1,7 @@
+ballot-stat-spark/target/
+.cache-main
+.cache-tests
+ballot-stat-spark/.idea/
+ballot-stat-spark/four-emotion-oversea.iml
+ballot-stat-spark/stat-ballot-daily.iml
+/.settings/

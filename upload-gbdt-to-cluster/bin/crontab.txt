@@ -1,0 +1,4 @@
+## add by huanghaifeng -- upload_gbdt_data_to_cluster
+05 * * * * cd /home/inveno/upload_gbdt_data_to_cluster/bin/ && sh -x get_gbdt_data.sh 1>../log/get_gbdt_data.log 2>&1
+*/2 * * * * cd /home/inveno/upload_gbdt_data_to_cluster/bin/ && sh -x monitor_service_state.sh 1>../log/monitor_service_state.log 2>&1
+*/10 * * * * cd /home/inveno/upload_gbdt_data_to_cluster/bin/ && sh -x monitor_service_blocked.sh 1>../log/monitor_service_blocked.log 2>&1
