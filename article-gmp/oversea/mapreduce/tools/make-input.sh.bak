@@ -1,0 +1,69 @@
+#!/bin/bash
+
+function submit_task()
+{
+	source ../conf/project.conf
+	source ../conf/hadoop.conf
+	source ../conf/warning.conf
+	
+	local delt=$1
+	
+	local curr_time=`date +%Y%m%d%H%M -d"-${delt} min"`  # max latency 20 minutes
+	local curr_date=`echo "${curr_time}" | awk '{
+		print substr($1, 1, 8)
+	}'`
+	local curr_hour=`echo "${curr_time}" | awk '{
+		print substr($1, 9, 2)
+	}'`
+	local curr_min=`echo "${curr_time}" | awk '{
+		print sprintf("%02d", int(substr($1, 11, 2) / 10) * 10)
+	}'`
+
+	click1=`echo ${HDFS_CLICK_PATH} | cut -d \, -f 1`
+	click2=`echo ${HDFS_CLICK_PATH} | cut -d \, -f 2`
+	impression1=`echo ${HDFS_IMPRESSION_PATH} | cut -d \, -f 1`
+	impression2=`echo ${HDFS_IMPRESSION_PATH} | cut -d \, -f 2`
+
+	local click_path1=${click1}/${curr_date}/${curr_hour}/*.${curr_date}_${curr_hour}${curr_min}
+	local click_path2=${click2}/${curr_date}/${curr_hour}/*.${curr_date}_${curr_hour}${curr_min}
+	local impression_path1=${impression1}/${curr_date}/${curr_hour}/*.${curr_date}_${curr_hour}${curr_min}
+	local impression_path2=${impression2}/${curr_date}/${curr_hour}/*.${curr_date}_${curr_hour}${curr_min}
+
+	${HADOOP_TEST} ${click_path1}
+	if [ $? -ne 0 ]
+	then
+		${WARNING_BIN} "no data : ${click_path1}" ${SMS_USER[$FATAL]}
+	fi
+        ${HADOOP_TEST} ${click_pat2}
+        if [ $? -ne 0 ]
+        then
+                ${WARNING_BIN} "no data : ${click_path2}" ${SMS_USER[$FATAL]}
+        fi
+
+	${HADOOP_TEST} ${impression_path1}
+	if [ $? -ne 0 ]
+	then
+		${WARNING_BIN} "no data : ${impression_path1}" ${SMS_USER[$FATAL]}
+	fi
+        ${HADOOP_TEST} ${impression_path2}
+        if [ $? -ne 0 ]
+        then
+                ${WARNING_BIN} "no data : ${impression_path2}" ${SMS_USER[$FATAL]}
+        fi
+
+	local curr_time=${curr_date}${curr_hour}${curr_min}
+
+	mkdir -p ../data/input
+	echo "${click_path1}" >../data/input/${curr_time}
+	echo "${click_path2}" >>../data/input/${curr_time}
+	echo "${impression_path1}" >>../data/input/${curr_time}
+	echo "${impression_path2}" >>../data/input/${curr_time}
+
+	return 0
+}
+
+end=10*6*0+10*1+20
+for((i=20; i<=${end}; i+=10))
+do
+	submit_task $i
+done
